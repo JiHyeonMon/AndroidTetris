@@ -92,7 +92,7 @@ class Game {
 
 
         // stop 되면 한번 모든 바닥 스캔 - 없어질 layer 있는지 확인
-
+        clear()
 
         // stop 되면 nextBlock이 현재 블럭, 새로운 nextBlock
         // 새로운 블럭 생성
@@ -163,11 +163,10 @@ class Game {
 
     }
 
+    // TODO  // 돌렸는데 벽을 넘어선다? 안됨
     fun rotate() {
 
         clearCurrentBlock()
-        // 돌렸는데 벽을 넘어선다? 안됨
-        // TODO
 
 
         // 이건 Controller에서 버튼 클릭
@@ -196,6 +195,8 @@ class Game {
         }
     }
 
+
+    // TODO Move Right, Left 내 블럭 사이즈로 판별하는데 0으로 채워진 경우 움직일 수 있어야 함.
     fun moveLeft() {
 
         if (currentBlock.x > 0) {
@@ -212,6 +213,20 @@ class Game {
             drawBlock()
         }
 
+    }
+
+    fun clear() {
+
+        for (y in gamePanel.indices) {
+            for(x in gamePanel[y].indices) {
+                if (gamePanel[y][x]!= -1) {
+                    return
+                }
+            }
+            // 한 줄 다 찬 -1 !!! 지운다.
+            gamePanel[y] = gamePanel[y-1]
+            gamePanel[0] = IntArray(GameConfig.TETRIS_WIDTH) { 0 }
+        }
     }
 
     fun gameOver() {
