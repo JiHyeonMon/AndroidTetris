@@ -61,7 +61,7 @@ class Game {
          */
         for (y in currentBlock.shape.indices) {
             for (x in currentBlock.shape[y].indices) {
-                if (currentBlock.shape[y][x] != 0) {
+                if (currentBlock.shape[y][x] > 0) {
 
                     gamePanel[currentBlock.y + y][currentBlock.x + x] = currentBlock.shape[y][x]
                 }
@@ -167,6 +167,7 @@ class Game {
 
         clearCurrentBlock()
         // 돌렸는데 벽을 넘어선다? 안됨
+        // TODO
 
 
         // 이건 Controller에서 버튼 클릭
@@ -184,7 +185,13 @@ class Game {
         // 이전의 나 지워,,,
         for (i in currentBlock.shape.indices) {
             for (j in currentBlock.shape[i].indices) {
-                gamePanel[currentBlock.y + i][currentBlock.x + j] = 0
+                // 이거다
+                    // 내가 move 하면 움직이고 이전의 나는 지우는데 0으로 초기화 필요, 기존의 나 지우고 다시 그릴거기 때문
+                        // 근데 여기서 내가 아닌 다른 쌓인 블럭이 있을 수 있다. 그 친구들은 안건들기 위해
+                            // 기존의 나 였던!! 애만 지운다.
+                if (gamePanel[currentBlock.y + i][currentBlock.x + j] == currentBlock.shape[i][j]) {
+                    gamePanel[currentBlock.y + i][currentBlock.x + j] = 0
+                }
             }
         }
     }

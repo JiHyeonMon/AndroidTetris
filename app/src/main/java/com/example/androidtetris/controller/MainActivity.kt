@@ -74,6 +74,10 @@ class MainActivity : AppCompatActivity() {
 //        check()
     }
 
+    /**
+     * 게임 진행하는 함수
+     * Model 값 확인 지속적으로 하며 화면 업데이트
+     */
     fun check() {
         handler = Handler()
         runnable = object : Runnable {
@@ -98,16 +102,15 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * View에 테트리스 그리는 함수
+     * Model에서 새로 반영된 값 가져와 화면에 그려줌
      */
     fun updateUI() {
 
-//        canvas.drawColor(Color.WHITE)
-//        binding.imageview.setImageBitmap(bitmap)
-        bitmap.eraseColor(Color.WHITE);
-
+        // 기존 화면 초기화
+        bitmap.eraseColor(Color.WHITE)
         binding.imageview.invalidate()
 
-
+        // Model에서 테트리스 게임 판 데이터 모두 가져옴
         val block = game.gamePanel
 
         // 색 정하기
@@ -129,11 +132,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-//        canvas.drawRect(block.x.toFloat(), y, x + 100, y + 100, paint)
-//        canvas.drawRect(x, y + 100, x + 100, y + 200, paint)
-//        canvas.drawRect(x - 100, y + 100, x, y + 200, paint)
-//        canvas.drawRect(x - 100, y + 200, x, y + 300, paint)
-
     }
 }
