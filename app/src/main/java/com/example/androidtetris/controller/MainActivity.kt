@@ -10,6 +10,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Handler
+import com.example.androidtetris.model.GameConfig
 
 
 class MainActivity : AppCompatActivity() {
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         // 테트리스 그릴 그림판 초기화
-        bitmap = Bitmap.createBitmap(800, 1200, Bitmap.Config.ARGB_8888)
+        bitmap = Bitmap.createBitmap(GameConfig.CANVAS_WIDTH, GameConfig.CANVAS_HEIGHT, Bitmap.Config.ARGB_8888)
         canvas = Canvas(bitmap)
         canvas.drawColor(Color.WHITE)
 
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             updateUI()
         }
         binding.btnDown.setOnClickListener {
-            game.moveDown()
+            game.progress()
             updateUI()
         }
         binding.btnLeft.setOnClickListener {
@@ -100,8 +101,12 @@ class MainActivity : AppCompatActivity() {
      */
     fun updateUI() {
 
-        canvas.drawColor(Color.WHITE)
-        binding.imageview.setImageBitmap(bitmap)
+//        canvas.drawColor(Color.WHITE)
+//        binding.imageview.setImageBitmap(bitmap)
+        bitmap.eraseColor(Color.WHITE);
+
+        binding.imageview.invalidate()
+
 
         val block = game.gamePanel
 
@@ -111,14 +116,14 @@ class MainActivity : AppCompatActivity() {
         for (i in block.indices) {
             for (j in block[i].indices) {
                 if (block[i][j] != 0) {
-                    val left = 100 * j.toFloat()
-                    val top = 100 * i.toFloat()
+                    val left = GameConfig.BLOCK_SIZE * j.toFloat()
+                    val top = GameConfig.BLOCK_SIZE * i.toFloat()
 
                     canvas.drawRect(
                         left,
                         top,
-                        left + 100,
-                        top + 100,
+                        left + GameConfig.BLOCK_SIZE,
+                        top + GameConfig.BLOCK_SIZE,
                         paint
                     )
                 }

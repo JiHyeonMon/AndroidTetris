@@ -3,8 +3,13 @@ package com.example.androidtetris.model
 object GameConfig {
 
     // 테트리스 판 너비와 높이 설정
-    const val TETRIS_WIDTH = 10
-    const val TERIS_HEIGHT = 20
+    const val TETRIS_WIDTH = 8
+    const val TERIS_HEIGHT = 10
+
+    const val CANVAS_WIDTH = 800
+    const val CANVAS_HEIGHT = 1000
+
+    const val BLOCK_SIZE = CANVAS_HEIGHT/TERIS_HEIGHT
 
     val tetromino1 = arrayOf(
         arrayOf(1, 0, 0, 0),
