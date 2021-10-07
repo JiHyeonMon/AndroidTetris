@@ -1,4 +1,7 @@
-package com.example.androidtetris.model
+package com.example.androidtetris.model.Tetromino
+
+import android.graphics.Color
+import com.example.androidtetris.model.GameConfig
 
 open class Tetromino {
 
@@ -7,8 +10,11 @@ open class Tetromino {
     var x: Int = GameConfig.TETRIS_WIDTH / 2 - 1
     var y: Int = 0
 
+    var color: Int = 0
+
     // 몇 by 몇 사이즈의 모양인지 나타낼
-    var shape: Array<Array<Int>> = GameConfig.block[(0..6).random()]
+    var shape: Array<Array<Int>> = arrayOf()
+
 
     fun rotate() {
         val rotateTetromino = Array(shape.size) { Array(shape.size) { 0 } }

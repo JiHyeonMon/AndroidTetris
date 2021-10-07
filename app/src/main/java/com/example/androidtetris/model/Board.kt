@@ -1,6 +1,7 @@
 package com.example.androidtetris.model
 
 import android.util.Log
+import com.example.androidtetris.model.Tetromino.Tetromino
 
 class Board {
 

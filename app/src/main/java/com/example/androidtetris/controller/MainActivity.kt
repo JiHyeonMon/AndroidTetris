@@ -6,12 +6,14 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.os.Handler
+import android.os.TransactionTooLargeException
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.androidtetris.databinding.ActivityMainBinding
 import com.example.androidtetris.model.Game
 import com.example.androidtetris.model.GameConfig
+import com.example.androidtetris.model.Tetromino.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -147,7 +149,16 @@ class MainActivity : AppCompatActivity() {
             for (j in block[i].indices) {
                 if (block[i][j] > 0) {
 
-                    paint.color = GameConfig.color[block[i][j]]
+                    paint.color = when(block[i][j]) {
+                        1 -> ITetromino().color
+                        2 -> JTetromino().color
+                        3 -> LTetromino().color
+                        4 -> OTetromino().color
+                        5 -> STetromino().color
+                        6 -> TTetromino().color
+                        7 -> ZTetromino().color
+                        else -> OTetromino().color
+                    }
 
                     val left = GameConfig.BLOCK_SIZE * j.toFloat()
                     val top = GameConfig.BLOCK_SIZE * i.toFloat()
@@ -177,7 +188,7 @@ class MainActivity : AppCompatActivity() {
                     val top = GameConfig.NEXT_BLOCK_SIZE * i.toFloat()
 
                     // 색 정하기
-                    nextPaint.color = GameConfig.color[nextBlock.shape[i][j]]
+                    nextPaint.color = nextBlock.color
 
                     nextCanvas.drawRect(
                         left,
