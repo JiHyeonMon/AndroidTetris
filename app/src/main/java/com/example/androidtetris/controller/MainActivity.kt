@@ -1,15 +1,14 @@
 package com.example.androidtetris.controller
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.util.Log
-import com.example.androidtetris.model.Game
-import com.example.androidtetris.databinding.ActivityMainBinding
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.os.Bundle
 import android.os.Handler
+import androidx.appcompat.app.AppCompatActivity
+import com.example.androidtetris.databinding.ActivityMainBinding
+import com.example.androidtetris.model.Game
 import com.example.androidtetris.model.GameConfig
 
 
@@ -21,6 +20,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bitmap: Bitmap
     private lateinit var canvas: Canvas
     private lateinit var paint: Paint
+
+    private lateinit var nextBlockBitmap: Bitmap
+    private lateinit var nextCanvas: Canvas
+    private lateinit var nextPaint: Paint
 
     private lateinit var binding: ActivityMainBinding
 
@@ -40,12 +43,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         // 테트리스 그릴 그림판 초기화
-        bitmap = Bitmap.createBitmap(GameConfig.CANVAS_WIDTH, GameConfig.CANVAS_HEIGHT, Bitmap.Config.ARGB_8888)
+        bitmap = Bitmap.createBitmap(
+            GameConfig.CANVAS_WIDTH,
+            GameConfig.CANVAS_HEIGHT,
+            Bitmap.Config.ARGB_8888
+        )
         canvas = Canvas(bitmap)
         canvas.drawColor(Color.WHITE)
 
         binding.imageview.setImageBitmap(bitmap)
         paint = Paint()
+
+
+
+
+        nextBlockBitmap = Bitmap.createBitmap(GameConfig.NEXT_BLOCK_WIDTH, GameConfig.NEXT_BLOCK_HEIGHT, Bitmap.Config.ARGB_8888)
+        nextCanvas = Canvas(nextBlockBitmap)
+        nextCanvas.drawColor(Color.WHITE)
+
+        binding.nextBlock.setImageBitmap(nextBlockBitmap)
+        nextPaint = Paint()
+
+
 
         game = Game()
         game.init()
@@ -55,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
         // Attach Click Listener
         binding.btnRotate.setOnClickListener {
-            game.rotate()
+            game.blockRotate()
             updateUI()
         }
         binding.btnDown.setOnClickListener {
@@ -119,6 +138,7 @@ class MainActivity : AppCompatActivity() {
         for (i in block.indices) {
             for (j in block[i].indices) {
                 if (block[i][j] != 0) {
+
                     val left = GameConfig.BLOCK_SIZE * j.toFloat()
                     val top = GameConfig.BLOCK_SIZE * i.toFloat()
 
@@ -132,5 +152,32 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        nextBlockBitmap.eraseColor(Color.WHITE)
+        binding.nextBlock.invalidate()
+
+        // Model에서 테트리스 게임 판 데이터 모두 가져옴
+        val nextBlock = game.nextBlock
+
+        // 색 정하기
+        nextPaint.color = nextBlock.color
+
+        for (i in nextBlock.shape.indices) {
+            for (j in nextBlock.shape[i].indices) {
+                if (nextBlock.shape[i][j] != 0) {
+                    val left = GameConfig.NEXT_BLOCK_SIZE * j.toFloat()
+                    val top = GameConfig.NEXT_BLOCK_SIZE * i.toFloat()
+
+                    nextCanvas.drawRect(
+                        left,
+                        top,
+                        left + GameConfig.NEXT_BLOCK_SIZE,
+                        top + GameConfig.NEXT_BLOCK_SIZE,
+                        nextPaint
+                    )
+                }
+            }
+        }
     }
+
 }

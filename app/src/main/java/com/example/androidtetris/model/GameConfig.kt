@@ -1,5 +1,7 @@
 package com.example.androidtetris.model
 
+import android.graphics.Color
+
 object GameConfig {
 
     // 테트리스 판 너비와 높이 설정
@@ -9,49 +11,54 @@ object GameConfig {
     const val CANVAS_WIDTH = 800
     const val CANVAS_HEIGHT = 1000
 
-    const val BLOCK_SIZE = CANVAS_HEIGHT/TERIS_HEIGHT
+    const val NEXT_BLOCK_WIDTH = 50
+    const val NEXT_BLOCK_HEIGHT = 50
 
-    val tetromino1 = arrayOf(
-        arrayOf(1, 0, 0, 0),
-        arrayOf(1, 0, 0, 0),
-        arrayOf(1, 0, 0, 0),
-        arrayOf(1, 0, 0, 0)
+    const val BLOCK_SIZE = CANVAS_HEIGHT/TERIS_HEIGHT
+    const val NEXT_BLOCK_SIZE = BLOCK_SIZE/8
+
+    val ITETROMINO = arrayOf(
+        arrayOf(0, 0, 0, 0),
+        arrayOf(1, 1, 1, 1),
+        arrayOf(0, 0, 0, 0),
+        arrayOf(0, 0, 0, 0)
     ) // 1*4 가로로 긴 애
 
-    val tetromino2 = arrayOf(
+    val OTETROMINO = arrayOf(
         arrayOf(2, 2),
         arrayOf(2, 2)
     ) // 2*2 정사각형
 
-    val tetromino3 = arrayOf(
-        arrayOf(3, 0, 0),
+    val STETROMINO = arrayOf(
+        arrayOf(0, 3, 3),
         arrayOf(3, 3, 0),
-        arrayOf(0, 3, 0)
+        arrayOf(0, 0, 0)
     )
 
-    val tetromino4 = arrayOf(
-        arrayOf(0, 4, 0),
+    val ZTETROMINO = arrayOf(
         arrayOf(4, 4, 0),
-        arrayOf(4, 0, 0)
+        arrayOf(0, 4, 4),
+        arrayOf(0, 0, 0)
     )
 
-    val tetromino5 = arrayOf(
+    val JTETROMINO = arrayOf(
         arrayOf(5, 0, 0),
-        arrayOf(5, 0, 0),
-        arrayOf(5, 5, 0)
+        arrayOf(5, 5, 5),
+        arrayOf(0, 0, 0)
     )
 
-    val tetromino6 = arrayOf(
-        arrayOf(0, 6, 0),
-        arrayOf(0, 6, 0),
-        arrayOf(6, 6, 0)
+    val LTETROMINO = arrayOf(
+        arrayOf(0, 0, 6),
+        arrayOf(6, 6, 6),
+        arrayOf(0, 0, 0)
     )
 
-    val tetromino7 = arrayOf(
-        arrayOf(7, 0, 0),
-        arrayOf(7, 7, 0),
-        arrayOf(7, 0, 0)
+    val TTETROMINO = arrayOf(
+        arrayOf(0, 7, 0),
+        arrayOf(7, 7, 7),
+        arrayOf(0, 0, 0)
     )
 
-    val block = arrayOf(tetromino1, tetromino2, tetromino3, tetromino4, tetromino5, tetromino6, tetromino7)
+    val block = arrayOf(ITETROMINO, OTETROMINO, STETROMINO, ZTETROMINO, JTETROMINO, LTETROMINO, TTETROMINO)
+    val color = arrayOf(Color.rgb(47.055F, 55.289F, 86.785F), Color.YELLOW, Color.GREEN, Color.RED, Color.BLUE, Color.rgb(255,69,0), Color.MAGENTA)
 }

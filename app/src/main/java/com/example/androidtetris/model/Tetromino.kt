@@ -8,7 +8,9 @@ open class Tetromino {
     var y: Int = 0
 
     // 몇 by 몇 사이즈의 모양인지 나타낼
-    var shape: Array<Array<Int>> = GameConfig.block[(0..6).random()] as Array<Array<Int>>
+    val shapeNum: Int = (0..6).random()
+    var color = GameConfig.color[shapeNum]
+    var shape: Array<Array<Int>> = GameConfig.block[shapeNum]
 
     fun rotate() {
         val rotateTetromino = Array(shape.size) { Array(shape.size) { 0 } }
@@ -16,6 +18,18 @@ open class Tetromino {
         for (i in shape.indices) {
             for (j in shape[i].indices) {
                 rotateTetromino[i][j] = shape[shape.size - 1 - j][i]
+            }
+        }
+
+        shape = rotateTetromino
+    }
+
+    fun reverseRotate() {
+        val rotateTetromino = Array(shape.size) { Array(shape.size) { 0 } }
+
+        for (i in shape.indices) {
+            for (j in shape[i].indices) {
+                rotateTetromino[shape.size-1-j][i] = shape[i][j]
             }
         }
 
