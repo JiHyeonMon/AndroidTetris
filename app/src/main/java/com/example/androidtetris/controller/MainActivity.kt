@@ -6,7 +6,9 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.os.Handler
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.example.androidtetris.databinding.ActivityMainBinding
 import com.example.androidtetris.model.Game
 import com.example.androidtetris.model.GameConfig
@@ -55,9 +57,11 @@ class MainActivity : AppCompatActivity() {
         paint = Paint()
 
 
-
-
-        nextBlockBitmap = Bitmap.createBitmap(GameConfig.NEXT_BLOCK_WIDTH, GameConfig.NEXT_BLOCK_HEIGHT, Bitmap.Config.ARGB_8888)
+        nextBlockBitmap = Bitmap.createBitmap(
+            GameConfig.NEXT_BLOCK_WIDTH,
+            GameConfig.NEXT_BLOCK_HEIGHT,
+            Bitmap.Config.ARGB_8888
+        )
         nextCanvas = Canvas(nextBlockBitmap)
         nextCanvas.drawColor(Color.WHITE)
 
@@ -78,7 +82,7 @@ class MainActivity : AppCompatActivity() {
             updateUI()
         }
         binding.btnDown.setOnClickListener {
-            game.progress()
+            game.moveDown()
             updateUI()
         }
         binding.btnLeft.setOnClickListener {
@@ -90,7 +94,7 @@ class MainActivity : AppCompatActivity() {
             updateUI()
         }
 
-//        check()
+        check()
     }
 
     /**
@@ -102,17 +106,21 @@ class MainActivity : AppCompatActivity() {
         runnable = object : Runnable {
             override fun run() {
 
+
+                //check game finish
+                if (game.state == Game.GAMESTATE.FINISHED) {
+                    gameOver()
+                    return
+                }
+
                 // action
-                game.progress()
+                game.moveDown()
 
                 // update
                 updateUI()
 
-                //check game finish
-
-
-                // 2초마다 움직임
-                handler.postDelayed(this, 2000)
+                // 1초마다 움직임
+                handler.postDelayed(this, 1000)
             }
         }
 
@@ -125,6 +133,7 @@ class MainActivity : AppCompatActivity() {
      */
     fun updateUI() {
 
+        binding.textScore.text = game.score.toString()
         // 기존 화면 초기화
         bitmap.eraseColor(Color.WHITE)
         binding.imageview.invalidate()
@@ -180,6 +189,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun gameOver() {
+        binding.textGameover.isVisible = true
+        handler.removeCallbacks(runnable)
+        Toast.makeText(this, "게임 종료", Toast.LENGTH_SHORT).show()
     }
 
 }
