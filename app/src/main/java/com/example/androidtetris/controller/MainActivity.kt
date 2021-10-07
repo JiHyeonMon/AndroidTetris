@@ -139,7 +139,7 @@ class MainActivity : AppCompatActivity() {
         binding.imageview.invalidate()
 
         // Model에서 테트리스 게임 판 데이터 모두 가져옴
-        val block = game.gamePanel
+        val block = game.board.matrix
 
         // 색 정하기
 
