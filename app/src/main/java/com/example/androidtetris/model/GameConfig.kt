@@ -60,5 +60,5 @@ object GameConfig {
     )
 
     val block = arrayOf(ITETROMINO, OTETROMINO, STETROMINO, ZTETROMINO, JTETROMINO, LTETROMINO, TTETROMINO)
-    val color = arrayOf(Color.rgb(47.055F, 55.289F, 86.785F), Color.YELLOW, Color.GREEN, Color.RED, Color.BLUE, Color.rgb(255,69,0), Color.MAGENTA)
+    val color = arrayOf(Color.BLACK, Color.rgb(47.055F, 55.289F, 86.785F), Color.YELLOW, Color.GREEN, Color.RED, Color.BLUE, Color.rgb(255,69,0), Color.MAGENTA)
 }

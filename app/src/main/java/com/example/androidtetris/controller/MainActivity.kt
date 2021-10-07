@@ -133,11 +133,12 @@ class MainActivity : AppCompatActivity() {
         val block = game.gamePanel
 
         // 색 정하기
-        paint.color = Color.RED
 
         for (i in block.indices) {
             for (j in block[i].indices) {
-                if (block[i][j] != 0) {
+                if (block[i][j] > 0) {
+
+                    paint.color = GameConfig.color[block[i][j]]
 
                     val left = GameConfig.BLOCK_SIZE * j.toFloat()
                     val top = GameConfig.BLOCK_SIZE * i.toFloat()
@@ -159,14 +160,15 @@ class MainActivity : AppCompatActivity() {
         // Model에서 테트리스 게임 판 데이터 모두 가져옴
         val nextBlock = game.nextBlock
 
-        // 색 정하기
-        nextPaint.color = nextBlock.color
 
         for (i in nextBlock.shape.indices) {
             for (j in nextBlock.shape[i].indices) {
                 if (nextBlock.shape[i][j] != 0) {
                     val left = GameConfig.NEXT_BLOCK_SIZE * j.toFloat()
                     val top = GameConfig.NEXT_BLOCK_SIZE * i.toFloat()
+
+                    // 색 정하기
+                    nextPaint.color = GameConfig.color[nextBlock.shape[i][j]]
 
                     nextCanvas.drawRect(
                         left,

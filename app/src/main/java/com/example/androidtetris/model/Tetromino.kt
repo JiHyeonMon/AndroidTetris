@@ -8,9 +8,7 @@ open class Tetromino {
     var y: Int = 0
 
     // 몇 by 몇 사이즈의 모양인지 나타낼
-    val shapeNum: Int = (0..6).random()
-    var color = GameConfig.color[shapeNum]
-    var shape: Array<Array<Int>> = GameConfig.block[shapeNum]
+    var shape: Array<Array<Int>> = GameConfig.block[(0..6).random()]
 
     fun rotate() {
         val rotateTetromino = Array(shape.size) { Array(shape.size) { 0 } }

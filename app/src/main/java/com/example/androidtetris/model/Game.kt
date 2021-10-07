@@ -52,71 +52,102 @@ class Game {
 
         Log.d("tetris", " ------------------------------------------ ")
 
-        // 아래 체크 먼저 - stop 조건
-        // 블럭의 아래가 바닥에 닿이거나
+        moveDown()
 
-        // 블록에 닿이거나(그러나 블럭 제일 아래만 보면 안되는게 아래만 뚫려있을 수도 있음)
-//        if (gamePanel[currentBlock.y + currentBlock.shape.size + 1][])
-        if (isValid("down")) {
-
-            // 아래로 한 칸 이동
-            moveDown()
-            return
-        }
+//        if (isValid()) {
+//            drawBlock()
+//
+//        } else {
+//
+//        }
+//        if (isValid("down")) {
+//
+//            // 아래로 한 칸 이동
+//            moveDown()
+//            return
+//        }
 
         // 이제 못내림
-        stopBlocked()
+//        stopBlocked()
 
         // stop 되면 한번 모든 바닥 스캔 - 없어질 layer 있는지 확인
 
-        checkClearLine()
+//        checkClearLine()
 
         // stop 되면 nextBlock이 현재 블럭, 새로운 nextBlock
         // 새로운 블럭 생성
-        currentBlock = nextBlock
-        nextBlock = Tetromino()
-        drawBlock()
+//        currentBlock = nextBlock
+//        nextBlock = Tetromino()
+//        drawBlock()
     }
 
     fun blockRotate() {
         // 이건 Controller에서 버튼 클릭
         // 현재 테트로미노 rotate
+        clearCurrentBlock()
+
 
         // TODO  // 돌렸는데 벽을 넘어선다? 안됨
         currentBlock.rotate()
 
-        if (isValid("right") && isValid("left") && isValid("down")) {
+//        if (isValid("right") && isValid("left") && isValid("down")) {
 
+        if (isValid()) {
             Log.e("click rotate", "can rotate")
             // 게임판의 블럭도 돌려야함.
             // currentBlock 의 현재 위치 기준으로
-            clearCurrentBlock()
             drawBlock()
-
 
         } else {
             Log.e("click rotate", "can't rotate")
 
             // valid 하지 않을 경우 이전 상태로 돌림
             currentBlock.reverseRotate()
+            drawBlock()
+
         }
 
+
+    }
+
+    fun newBlock() {
+        currentBlock = nextBlock
+        nextBlock = Tetromino()
+        drawBlock()
     }
 
     fun moveLeft() {
 
-        if (isValid("left")) {
-            clearCurrentBlock()
-            currentBlock.x -= 1
+//        if (isValid("left")) {
+//            clearCurrentBlock()
+//            currentBlock.x -= 1
+//            drawBlock()
+//        }
+        clearCurrentBlock()
+
+        currentBlock.x -= 1
+        if (isValid()) {
+            drawBlock()
+        } else {
+            currentBlock.x += 1
             drawBlock()
         }
     }
 
     fun moveRight() {
 
-        if (isValid("right")) {
-            clearCurrentBlock()
-            currentBlock.x += 1
+//        if (isValid("right")) {
+//            clearCurrentBlock()
+//            currentBlock.x += 1
+//            drawBlock()
+//        }
+        clearCurrentBlock()
+
+        currentBlock.x += 1
+        if (isValid()) {
+            drawBlock()
+        } else {
+            currentBlock.x -= 1
             drawBlock()
         }
 
@@ -148,6 +179,33 @@ class Game {
                 }
             }
         }
+    }
+
+    private fun isValid(): Boolean {
+        for (y in currentBlock.shape.indices) {
+            for (x in currentBlock.shape[y].indices) {
+                if (currentBlock.shape[y][x] != 0) {
+
+                    if (currentBlock.y + y > GameConfig.TERIS_HEIGHT - 1 ||
+                        currentBlock.x + x > GameConfig.TETRIS_WIDTH - 1 ||
+                        currentBlock.x + x < 0
+                    ) {
+
+                        Log.e("is not valid1", "can't move")
+                        return false
+                    }
+
+                    if (gamePanel[currentBlock.y + y][currentBlock.x + x] != 0) {
+                        Log.e("is not valid2", "can't move")
+                        return false
+                    }
+
+                }
+            }
+        }
+        Log.e("is valid", "can move")
+
+        return true
     }
 
     private fun isValid(direction: String): Boolean {
@@ -215,18 +273,25 @@ class Game {
 
         // 아래로 내린다.
         currentBlock.y += 1
+        if (isValid()) {
+            drawBlock()
+        } else {
+            currentBlock.y -= 1
+            drawBlock()
+            newBlock()
+        }
 
         // 새로 그린다.
-        drawBlock()
 
     }
 
     private fun clearCurrentBlock() {
 
-        for (y in gamePanel.indices) {
-            for (x in gamePanel[y].indices) {
-                if (gamePanel[y][x] > 0) {
-                    gamePanel[y][x] = 0
+        for (y in currentBlock.shape.indices) {
+            for (x in currentBlock.shape[y].indices) {
+
+                if (currentBlock.shape[y][x] > 0) {
+                    gamePanel[currentBlock.y + y][currentBlock.x + x] = 0
                 }
             }
         }
@@ -260,17 +325,17 @@ class Game {
 
     }
 
-    private fun stopBlocked() {
-        Log.e("i stop", "set -1 ")
-
-        for (y in gamePanel.indices) {
-            for (x in gamePanel[y].indices) {
-                if (gamePanel[y][x] > 0) {
-                    gamePanel[y][x] = -1
-                }
-            }
-        }
-    }
+//    private fun stopBlocked() {
+//        Log.e("i stop", "set -1 ")
+//
+//        for (y in gamePanel.indices) {
+//            for (x in gamePanel[y].indices) {
+//                if (gamePanel[y][x] > 0) {
+//                    gamePanel[y][x] = -1
+//                }
+//            }
+//        }
+//    }
 
     fun gameOver() {
         // 현재 블럭이 움직일 수 없을 때 == 바닥에 닿이면 종료
