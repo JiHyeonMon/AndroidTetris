@@ -1,6 +1,8 @@
 package com.example.androidtetris.model
 
 import android.util.Log
+import com.example.androidtetris.model.Tetromino.Tetromino
+import com.example.androidtetris.model.Tetromino.TetrominoFactory
 
 class Game {
 
@@ -14,6 +16,7 @@ class Game {
     var score: Int = 0
 
     lateinit var board : Board
+    lateinit var tetrominoFactory: TetrominoFactory
     lateinit var currentBlock: Tetromino
     lateinit var nextBlock: Tetromino
 
@@ -26,9 +29,12 @@ class Game {
     fun init() {
 
         state = GAMESTATE.FINISHED
+        tetrominoFactory = TetrominoFactory()
+
         board = Board()
-        currentBlock = Tetromino()
-        nextBlock = Tetromino()
+
+        currentBlock = tetrominoFactory.create()
+        nextBlock = tetrominoFactory.create()
 
         score = 0
     }
@@ -101,7 +107,7 @@ class Game {
 
     private fun newBlock() {
         currentBlock = nextBlock
-        nextBlock = Tetromino()
+        nextBlock = tetrominoFactory.create()
 
         if (!board.isValid(currentBlock)) {
             gameOver()
