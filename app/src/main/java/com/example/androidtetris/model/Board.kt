@@ -14,6 +14,7 @@ class Board {
     val board = MutableList(height) { MutableList(width) { 0 } }
     lateinit var block: Tetromino
 
+    // board에 block을 새로 받아와 넣어준다.
     fun addBlock(b: Tetromino) {
         block = b
     }
@@ -22,18 +23,14 @@ class Board {
     fun arrange() {
         Log.e("arrange", "is arrange")
 
+        // 보드판에 그려줄 블럭 가져와 반복문 통해 돌면서 확인하며 그린다.
         for (y in block.shape.indices) {
             for (x in block.shape[y].indices) {
 
-                if (block.y + y > GameConfig.TERIS_HEIGHT - 1 ||
-                    block.x + x > GameConfig.TETRIS_WIDTH - 1 ||
-                    block.x + x < 0
-                ) {
-                    continue
-                }
-
+                // 값이 있는 부분만 확인 후 보드판에 그려준다.
                 if (block.shape[y][x] > 0) {
-
+                    // block 값이 0 이상인 숫자가 있는 곳이 실제 네모 블럭
+                    // 0 이상이면 board에 숫자 넣어서 그린다.
                     board[block.y + y][block.x + x] = block.shape[y][x]
                 }
             }
@@ -42,7 +39,6 @@ class Board {
 
     // 현재 블럭이 움직일 때, 보드판 상에서 유효한지 검사
     // 일단 움직인 값 제공!
-
     // 1. 현재 블럭이 오른쪽/왼쪽 벽을 넘었는지
     // 2. 현재 블럭이 바닥에 닿였는지
     // 3. 현재 블럭이 다른 블럭과 겹치는지
