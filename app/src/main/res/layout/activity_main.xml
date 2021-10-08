@@ -7,47 +7,71 @@
     android:background="@color/teal_700">
 
     <ImageView
-        android:id="@+id/imageview"
+        android:id="@+id/game_board"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout1"
-        app:layout_constraintEnd_toStartOf="@id/nextBlock"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@id/next_block"
         app:layout_constraintHorizontal_weight="7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/nextBlock"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/textview"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/next_block"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintHorizontal_weight="3"
-        app:layout_constraintStart_toEndOf="@id/imageview"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintBottom_toTopOf="@+id/textview1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/game_board"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textview"
+        android:id="@+id/textview1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="score: "
-        android:textSize="20sp"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintTop_toBottomOf="@id/nextBlock"
-        app:layout_constraintBottom_toTopOf="@id/linearLayout1"
-        app:layout_constraintStart_toEndOf="@id/imageview"
-        app:layout_constraintEnd_toStartOf="@id/textScore"/>
+        android:layout_marginTop="76dp"
+        android:text="level: "
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/textview2"
+        app:layout_constraintEnd_toStartOf="@id/text_score"
+        app:layout_constraintStart_toEndOf="@id/game_board"
+        app:layout_constraintTop_toBottomOf="@id/next_block" />
 
     <TextView
-        android:id="@+id/textScore"
+        android:id="@+id/text_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textSize="15sp"
+        app:layout_constraintTop_toTopOf="@id/textview1"
+        app:layout_constraintBottom_toBottomOf="@id/textview1"
+        app:layout_constraintStart_toEndOf="@id/textview1"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/textview2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:text="score: "
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout1"
+        app:layout_constraintEnd_toStartOf="@id/text_score"
+        app:layout_constraintStart_toEndOf="@id/game_board"
+        app:layout_constraintTop_toBottomOf="@id/textview1" />
+
+    <TextView
+        android:id="@+id/text_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="@id/textview"
-        app:layout_constraintBottom_toBottomOf="@id/textview"
-        app:layout_constraintStart_toEndOf="@id/textview"
+        android:textSize="15sp"
+        app:layout_constraintTop_toTopOf="@id/textview2"
+        app:layout_constraintBottom_toBottomOf="@id/textview2"
+        app:layout_constraintStart_toEndOf="@id/textview2"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <LinearLayout
